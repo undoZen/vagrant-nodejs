@@ -12,11 +12,11 @@ vagrant-nodejs
 * Clone the repository and start the virtual machine (the first time will take awhile to boot)
   * `$ git clone https://github.com/kherrick/vagrant-nodejs`
   * `$ cd vagrant-nodejs/`
-  * `$ ./start.sh`
+  * `$ bin/start.sh`
 
 * To turn off the virtual machine
-  * `$ ./stop.sh`
+  * `$ bin/stop.sh`
 
 * To login to the virtual machine
-  * `$ ./login.sh`
+  * `$ bin/login.sh`
 
