@@ -1,1 +1,2 @@
-include vagrant
+include system
+include nodejs

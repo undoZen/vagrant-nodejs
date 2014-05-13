@@ -22,6 +22,7 @@ if [ $? -eq 0 ]; then
   ln -s $DIRECTORY/bin/node /usr/local/bin/node
   ln -s $DIRECTORY/bin/npm /usr/local/bin/npm
 
+  ### touch the file so vagrant knows everything went well
   su - vagrant -c 'touch /home/vagrant/.vagrant/.nodejs'
 else
   echo Could not fetch Node.js...
