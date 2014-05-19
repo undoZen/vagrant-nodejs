@@ -14,6 +14,16 @@ class system {
         mode => 0755
     }
 
-    File['/home/vagrant/.vagrant'] -> File['/home/vagrant/.vagrant/bin']
+    exec { 'apt-get-update':
+        command => '/usr/bin/apt-get update'
+    }
+
+    package { 'git':
+        ensure  => installed
+    }
+
+    File['/home/vagrant/.vagrant']     -> File['/home/vagrant/.vagrant/bin']
+    File['/home/vagrant/.vagrant/bin'] -> Exec['apt-get-update']
+    Exec['apt-get-update']             -> Package['git']
 
 }
