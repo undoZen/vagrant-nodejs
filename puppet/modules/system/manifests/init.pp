@@ -1,29 +1,42 @@
 class system {
 
-    file { '/home/vagrant/.vagrant':
-        ensure => directory,
-        owner => 'vagrant',
-        group => 'vagrant',
-        mode => 0755
-    }
-
-    file { '/home/vagrant/.vagrant/bin':
-        ensure => directory,
-        owner => 'vagrant',
-        group => 'vagrant',
-        mode => 0755
-    }
-
     exec { 'apt-get-update':
         command => '/usr/bin/apt-get update'
     }
 
     package { 'git':
-        ensure  => installed
+        require => Exec['apt-get-update'],
+        ensure => installed
     }
 
-    File['/home/vagrant/.vagrant']     -> File['/home/vagrant/.vagrant/bin']
-    File['/home/vagrant/.vagrant/bin'] -> Exec['apt-get-update']
-    Exec['apt-get-update']             -> Package['git']
+    file { '/opt/vagrant-provision':
+        ensure => directory,
+        owner => 'root',
+        group => 'root',
+        mode => 0755
+    }
+
+    file { '/opt/vagrant-provision/bin':
+        require => File['/opt/vagrant-provision'],
+        ensure => directory,
+        owner => 'root',
+        group => 'root',
+        mode => 0755
+    }
+
+    file { '/opt/vagrant-provision/bin/vagrant-user-setup.sh':
+        require => File['/opt/vagrant-provision/bin'],
+        source => 'puppet:///modules/system/vagrant-user-setup.sh',
+        ensure => file,
+        owner => 'root',
+        group => 'root',
+        mode => 0755
+    }
+
+    exec { 'vagrant-user-setup':
+        require => File['/opt/vagrant-provision/bin/vagrant-user-setup.sh'],
+        command => '/opt/vagrant-provision/bin/vagrant-user-setup.sh',
+        creates => '/opt/vagrant-provision/.vagrant-user-setup'
+    }
 
 }
