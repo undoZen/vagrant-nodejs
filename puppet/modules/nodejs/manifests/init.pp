@@ -1,35 +1,36 @@
 class nodejs {
 
-    file { '/home/vagrant/.vagrant/bin/nodejs.sh':
+    require system
+
+    file { '/opt/vagrant-provision/bin/nodejs.sh':
         source => 'puppet:///modules/nodejs/nodejs.sh',
         ensure => file,
-        owner => 'vagrant',
-        group => 'vagrant',
+        owner => 'root',
+        group => 'root',
         mode => 0755
     }
 
     exec { 'nodejs':
-        command => '/home/vagrant/.vagrant/bin/nodejs.sh',
-        creates => '/home/vagrant/.vagrant/.nodejs',
+        require => File['/opt/vagrant-provision/bin/nodejs.sh'],
+        command => '/opt/vagrant-provision/bin/nodejs.sh',
+        creates => '/opt/vagrant-provision/.nodejs',
         timeout => 3600
     }
 
-    file { '/home/vagrant/.vagrant/bin/npm.sh':
+    file { '/opt/vagrant-provision/bin/npm.sh':
+        require => Exec['nodejs'],
         source => 'puppet:///modules/nodejs/npm.sh',
         ensure => file,
-        owner => 'vagrant',
-        group => 'vagrant',
+        owner => 'root',
+        group => 'root',
         mode => 0755
     }
 
     exec { 'npm':
-        command => '/home/vagrant/.vagrant/bin/npm.sh',
-        creates => '/home/vagrant/.vagrant/.npm',
+        require => File['/opt/vagrant-provision/bin/npm.sh'],
+        command => '/opt/vagrant-provision/bin/npm.sh',
+        creates => '/opt/vagrant-provision/.npm',
         timeout => 3600
     }
-
-    File['/home/vagrant/.vagrant/bin/nodejs.sh'] -> Exec['nodejs']
-    Exec['nodejs']                               -> File['/home/vagrant/.vagrant/bin/npm.sh']
-    File['/home/vagrant/.vagrant/bin/npm.sh']    -> Exec['npm']
 
 }

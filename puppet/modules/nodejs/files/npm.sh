@@ -5,4 +5,4 @@ sudo npm config set strict-ssl false
 su - vagrant -c 'npm config set strict-ssl false'
 
 ### touch the file so vagrant knows everything went well
-su - vagrant -c 'touch /home/vagrant/.vagrant/.npm'
+touch /opt/vagrant-provision/.npm
