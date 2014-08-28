@@ -12,6 +12,7 @@ vagrant-nodejs
 * Clone the repository and start the virtual machine (the first time will take awhile to boot)
   * `$ git clone https://github.com/kherrick/vagrant-nodejs`
   * `$ cd vagrant-nodejs/`
+  * `$ git checkout -b nodejsAngularTodo origin/nodejsAngularTodo`
   * `$ bin/vm start`
 
 * To turn off the virtual machine
@@ -19,3 +20,11 @@ vagrant-nodejs
 
 * To login to the virtual machine
   * `$ bin/vm ssh`
+
+###To initialize the application
+
+* Run the following:
+  * `$ bin/vm npm install`
+  * `$ bin/vm nodemon server.js`
+* Browse to:
+  * `http://localhost:8081`
