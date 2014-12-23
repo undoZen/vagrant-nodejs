@@ -7,7 +7,7 @@ cd /opt
 FILENAME=$(wget --quiet -O - http://nodejs.org/dist/latest/ | grep -i linux-x86 | cut -d\" -f2)
 if [ $FILENAME ]; then
   DIRECTORY=/opt/$(basename $FILENAME .tar.gz)
-  URL=http://nodejs.org/dist/latest/$FILENAME
+  URL=http://npm.taobao.org/dist/latest/$FILENAME
 else
   echo Could not find the appropriate Node.js download...
   exit 1
